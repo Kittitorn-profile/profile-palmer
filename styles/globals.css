@@ -33,13 +33,20 @@ a {
 	box-shadow: none !important;
 }
 
+table,
+tr,
+td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
 @media (prefers-color-scheme: dark) {
 	html {
 		color-scheme: dark;
 	}
 	body {
 		color: #3b5d77;
-		background: rgb(74, 106, 174);
+		background: rgb(255, 255, 255);
 		height: 100vh;
 		font-family: "Helvetica Neue", sans-serif;
 	}

@@ -1,231 +1,112 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import styles from "../styles/Home.module.css";
-import { Carousel } from "react-responsive-carousel";
+import React, { useState } from "react";
+import styled from "styled-components";
 
-const Home = () => {
-	const onClickCard = () => {};
-	const items = [
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-		{
-			id: 1,
-		},
-	];
+const Input = styled.input`
+	padding: 0.5em;
+	margin-top: 0.5em;
+	color: #000000;
+	width: 100%;
+	background: #ffffff;
+	border: 1px solid #000;
+	border-radius: 3px;
+`;
+
+const Button = styled.button`
+	padding: 0.5em;
+	margin-top: 0.5em;
+	color: #fff;
+	width: 100%;
+	background: green;
+	border: 1px solid #000;
+	border-radius: 3px;
+`;
+
+const Pixel = styled.div`
+	width: 50px;
+	height: 50px;
+	color: #fff;
+	background: green;
+	border: 1px solid #000;
+	border-radius: 3px;
+`;
+
+export default function Home() {
+	const [text, setText] = useState();
+
+	// 3.1. L - หันซ้าย
+	// 3.2. R - หันขวา
+	// 3.3. W – เดินไปด้านหน้าตามทิศทางที่หัน (เมื่อโปรแกรมเริ่มต้นจะหันไปทางด้านบนเสมอ)
+
+	function shuffle(array) {
+		let x = 0;
+		let y = 0;
+		console.log("in array", array);
+		for (const element of array) {
+			console.log(element);
+			if (element === "r" || element === "R") {
+				console.log("in R");
+			} else if (element === "w" || element === "W") {
+				console.log("in W");
+			} else if (element === "l" || element === "L") {
+				console.log("in L");
+			}
+		}
+
+		// for (i; i > 0; i--) {
+		// 	console.log(">>>", array[i], i);
+		// 	// if(array[i] )
+		// 	// const j = Math.floor(Math.random() * (i + 1));
+		// 	// if()
+		// 	// [array[i], array[j]] = [array[j], array[i]];
+		// }
+	}
+
+	function generateTable(dataTable, containerId, classes) {
+		shuffle(dataTable);
+		let container = document.getElementById(containerId);
+		let table = document.createElement("table");
+
+		// Add classes to table
+		for (const clazz of classes) {
+			table.classList.add(clazz);
+		}
+
+		// Calculate cant of rows and columns
+		let cantDataRow = 0;
+		let cantDataCol = 0;
+		do {
+			cantDataRow++;
+			cantDataCol = Math.ceil(dataTable.length / cantDataRow);
+		} while (dataTable.length / Math.pow(cantDataRow, 2) > 1);
+
+		let aux = 0;
+		for (let i = 0; i < cantDataRow; i++) {
+			// rows
+			let row = document.createElement("tr");
+			for (let j = 0; j < cantDataCol; j++) {
+				// columns
+				let col = document.createElement("td");
+				col.textContent = dataTable[aux++];
+				row.appendChild(col); // Add column to row
+			}
+			table.appendChild(row); // Add row to table
+		}
+		container.appendChild(table); // Add table to container
+	}
+
+	const onSummary = () => {
+		const walk = text.split("");
+		generateTable(walk, "container", ["class1", "class2", "class3", "etc"]);
+	};
+
 	return (
-		<div className={styles.container}>
+		<div style={{ padding: 20 }}>
+			<div>คำสั่ง Robot Walk</div>
+			<Input value={text} onChange={(e) => setText(e.target.value)} />
+			<Button onClick={() => onSummary()}>คำนวน</Button>
 			<div>
-				<div className={styles.titleContent}>
-					<div>
-						<div style={{ fontSize: 24, fontWeight: "bold" }}>
-							All my accounts
-						</div>
-						<div style={{ color: "#9DB5C8", marginTop: 4 }}>June 10 2018</div>
-					</div>
-					<div>
-						<span className="material-symbols-rounded" style={{ fontSize: 28 }}>
-							equalizer
-						</span>
-					</div>
-				</div>
-
-				<div>
-					<Carousel
-						showThumbs={false}
-						showArrows={false}
-						showStatus={false}
-						// autoPlay
-					>
-						<Link href="/detailCard">
-							<img src="/visa-1.png" />
-						</Link>
-
-						<Link href="/detailCard">
-							<img src="/visa-2.png" />
-						</Link>
-						<div>
-							<img src="/visa-3.png" />
-						</div>
-					</Carousel>
-				</div>
-
-				<div style={{ padding: `0 2rem` }}>
-					<div
-						style={{
-							display: "flex",
-							flexDirection: "row",
-							alignItems: "center",
-						}}
-					>
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								width: "50%",
-							}}
-						>
-							<div
-								style={{
-									margin: `8px 0px`,
-									fontWeight: "bold",
-									fontSize: "14px",
-								}}
-							>
-								Income
-							</div>
-							<div
-								style={{
-									display: "flex",
-									flexDirection: "row",
-									alignItems: "center",
-									justifyContent: "center",
-									color: "#42B84F",
-									fontSize: "18px",
-								}}
-							>
-								<span className="material-symbols-rounded">arrow_downward</span>
-								<div style={{ marginLeft: "8px" }}>$9,302.00</div>
-							</div>
-						</div>
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								width: "50%",
-							}}
-						>
-							<div
-								style={{
-									margin: `8px 0px`,
-									fontWeight: "bold",
-									fontSize: "14px",
-								}}
-							>
-								Expense
-							</div>
-							<div
-								style={{
-									display: "flex",
-									flexDirection: "row",
-									alignItems: "center",
-									justifyContent: "center",
-									color: "red",
-									fontSize: "18px",
-								}}
-							>
-								<span className="material-symbols-rounded">arrow_upward</span>
-								<div style={{ marginLeft: "8px" }}>$2,790.00</div>
-							</div>
-						</div>
-					</div>
-					<div
-						style={{
-							display: "flex",
-							flexDirection: "row",
-							alignItems: "center",
-							justifyContent: "space-between",
-							margin: "16px 0px",
-						}}
-					>
-						<div style={{ fontSize: 24, fontWeight: "normal" }}>
-							Detail of movements
-						</div>
-						<span className="material-symbols-rounded">today</span>
-					</div>
-					{/* /// */}
-
-					{items.map((i) => (
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "row",
-								alignItems: "center",
-								justifyContent: "space-between",
-								margin: "16px 0px",
-								backgroundColor: "#fff",
-								padding: "16px 8px",
-								borderRadius: 16,
-							}}
-						>
-							<div
-								style={{
-									display: "flex",
-									flexDirection: "row",
-									alignItems: "center",
-									width: "80%",
-								}}
-							>
-								<div style={{ width: "20%" }}>
-									<span className="material-symbols-rounded">restaurant</span>
-								</div>
-								<div
-									style={{
-										display: "flex",
-										flexDirection: "column",
-									}}
-								>
-									<div>Restaurant Manhattan</div>
-									<div>June 10 2018</div>
-								</div>
-							</div>
-							<div
-								style={{
-									width: "20%",
-									display: "flex",
-									flexDirection: "row",
-									alignItems: "center",
-									justifyContent: "center",
-									color: "red",
-									fontSize: "18px",
-								}}
-							>
-								<div style={{ marginLeft: "8px" }}>$170</div>
-								<span className="material-symbols-rounded">arrow_upward</span>
-							</div>
-						</div>
-					))}
-				</div>
+				<div id="container" />
 			</div>
-
-			<footer className={styles.footer}>
-				<a
-					href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Powered by{" "}
-					<span className={styles.logo}>
-						<Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-					</span>
-				</a>
-			</footer>
 		</div>
 	);
-};
-
-export default Home;
+}
